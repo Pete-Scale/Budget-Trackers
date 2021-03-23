@@ -1,31 +1,30 @@
-console.log("Service Worker Works!")
-
+console.log("Service worker works!")
 const FILES_TO_CACHE = [
-    '/',
-    '/icons/icon-192x192.png',
-    '/icons/icon-512x512.png',
-    '/index.html',
-    '/index.js',
-    '/manifest.webmanifest',
-    '/style.css',
-    'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'
-];
+  "/",
+  "/index.html",
+  "/icons/icon-192x192.png",
+  "/icons/icon-512x512.png",
+  "/index.js",
+  "/manifest.json",
+  "/styles.css",
+  "/db.js",
+  "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+]
 
-const CACHE_NAME = 'budget-tracker-cache-v1';
-const DATA_CACHE_NAME = 'bt-data-cache-v1';
+const BUDGET_CACHE = "static-cache-v1"
+const DATA_CACHE_BUDGET = "data-cache-v1"
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches
-      .open(CACHE_NAME)
+      .open(BUDGET_CACHE)
       .then((cache) => cache.addAll(FILES_TO_CACHE))
       .then(self.skipWaiting())
   );
 });
 
-// The activate handler takes care of cleaning up old caches.
 self.addEventListener('activate', (event) => {
-  const currentCaches = [CACHE_NAME, RUNTIME];
+  const currentCaches = [BUDGET_CACHE, DATA_CACHE_BUDGET];
   event.waitUntil(
     caches
       .keys()
@@ -50,8 +49,7 @@ self.addEventListener('fetch', (event) => {
         if (cachedResponse) {
           return cachedResponse;
         }
-
-        return caches.open(RUNTIME).then((cache) => {
+        return caches.open(BUDGET_CACHE).then((cache) => {
           return fetch(event.request).then((response) => {
             return cache.put(event.request, response.clone()).then(() => {
               return response;
