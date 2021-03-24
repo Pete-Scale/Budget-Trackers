@@ -23,7 +23,7 @@ Also here is a quick gif
 
 ## Description
 
-A command-line application for managing a company's employees using node, inquirer, and MySQL
+Added functionality to an existing Budget Tracker application to allow for offline access and functionality. The user will be able to add expenses and deposits to their budget with or without a connection. When entering transactions offline, they populate the total when brought back online.
 
 <br>
 

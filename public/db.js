@@ -22,6 +22,8 @@ request.onerror = function(event) {
 };
 
 function saveRecord(record) {
+
+  console.log("inside save record")
   
   const transaction = db.transaction(["pending"], "readwrite");
 
@@ -31,6 +33,8 @@ function saveRecord(record) {
 }
 
 function checkDatabase() {
+
+  console.log("inside check database-----------------")
   
   const transaction = db.transaction(["pending"], "readwrite");
   
@@ -39,6 +43,7 @@ function checkDatabase() {
   const getAll = store.getAll();
 
   getAll.onsuccess = function() {
+    console.log("inside getAll-------------------", getAll.result)
     if (getAll.result.length > 0) {
       fetch("/api/transaction/bulk", {
         method: "POST",
